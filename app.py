@@ -18,16 +18,19 @@ def extract_text_from_image(image):
     threshold_value = 200
     _, mask = cv2.threshold(img_gray, threshold_value, 255, cv2.THRESH_BINARY)
     img = cv2.bitwise_and(img_gray, mask)
+
+    # ocr - Paddle
+
     ocr = PaddleOCR(use_angle_cls=True, lang='en')
     result = ocr.ocr(img, cls=True)
     text = ""
     for idx in range(len(result)):
         res = result[idx]
         for line in res:
-            rex+="".join(line[1][0])
-    st.header("Extracted Text from OCR :")
+            text+="".join(line[1][0])
+    st.write("Extracted Text from OCR :")
     st.write(text)
-    st.header("Extracted Json Format :")
+    st.write("Extracted Json Format :")
     prompt = "Extract the relevant data from the provided resume content into JSON format, excluding any introductory or ending lines : "
     llm = Ollama(model="llama2")
     content = str(prompt) + str(text)
@@ -50,10 +53,13 @@ def extract_text_from_pdf(pdf_file):
     st.write(text)
     st.header("Extracted Json Format :")
     prompt = "Extract the relevant data from the provided resume content into JSON format, excluding any introductory or ending lines : "
-    llm = Ollama(model="llama2")
     content = str(prompt) + str(text)
-    answer = llm.invoke(content)
-    return answer
+    llm = Ollama(model="llama2")
+
+    with st.spinner("Loading answer..."):
+        answer = llm.invoke(content)
+    st.json(answer)
+    
 
 def main():
     st.title("Resume Parser")
