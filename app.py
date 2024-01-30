@@ -46,7 +46,14 @@ def extract_text_from_pdf(pdf_file):
             text += page.get_text()
         doc.close()
     os.remove(temp_pdf_path)
-    return text
+    st.header("Extracted Text from OCR :")
+    st.write(text)
+    st.header("Extracted Json Format :")
+    prompt = "Extract the relevant data from the provided resume content into JSON format, excluding any introductory or ending lines : "
+    llm = Ollama(model="llama2")
+    content = str(prompt) + str(text)
+    answer = llm.invoke(content)
+    return answer
 
 def main():
     st.title("Resume Parser")
