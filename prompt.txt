@@ -1,0 +1,25 @@
+JSON Prompt = >
+{
+        personal_details: {
+            name: "",
+            email: "",
+            phone: "",
+            links: {
+                linkedin: "",
+                github: "",
+                website: ""
+            }
+        },
+        projects: [
+            {
+                title: "",
+                description: "",
+            }
+        ],
+        skills: [
+            {
+                name: "",
+                level: ""
+            }
+        ],
+    }
