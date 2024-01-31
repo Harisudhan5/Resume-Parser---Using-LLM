@@ -14,7 +14,7 @@ def llm_respnse_for_all(text):
     st.subheader("Extracted Text from OCR :")
     st.write(text)
     st.write("Extracted Json Format :")
-    prompt = "Extract the relevant data from the provided resume content into JSON format, excluding any introductory or ending lines : "
+    prompt = prompt
     llm = Ollama(model="llama2")
     content = str(prompt) + str(text)
     with st.spinner("Loading answer..."):
