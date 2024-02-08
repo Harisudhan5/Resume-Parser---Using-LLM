@@ -1,3 +1,4 @@
+# Testing llama2 on OLLama to chat with LLM
 from langchain_community.llms import Ollama
 
 llm = Ollama(model="llama2")
